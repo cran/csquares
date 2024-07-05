@@ -16,10 +16,13 @@
 #' @param validate A `logical` value indicating whether the created object needs to be validated.
 #' Defaults to `TRUE`. Validation can be time-consuming so set to `FALSE` to save computing time.
 #' @param ... Currently ignored
+#' @param use_centroids In case `x` is a simple features object and `use_centroids` is `TRUE`,
+#' the centroid of each geometry is used for deriving c-squares. If it is `FALSE` all coordinates
+#' in the geometry are used.
 #' @returns Returns a `csquares` object that contains c-squares codes.
 #' @examples
 #' as_csquares(cbind(x = 5.2399066, y = 52.7155812), resolution = 1)
-#' as_csquares(orca, csquares = "csquares")
+#' orca_csq <- as_csquares(orca, csquares = "csquares")
 #' @include helpers.R
 #' @author Pepijn de Vries
 #' @rdname as_csquares
@@ -42,9 +45,13 @@ as_csquares.default <- function(x, resolution, csquares, ...) {
 #' @name as_csquares
 #' @export
 as_csquares.character <- function(x, resolution, csquares, validate = TRUE, ...) {
-  class(x) <- c("csquares", class(x))
+  x <- vctrs::new_vctr(x, class = c("csquares", "character"))
   if (validate) {
     check <- tryCatch({
+      has_wildcards <- grepl("[*]", x)
+      if (any( has_wildcards )) {
+        x[has_wildcards] <- expand_wildcards(x[has_wildcards])
+      }
       validate_csquares(x)
     }, error = function(e) FALSE)
     if (!check)
@@ -85,18 +92,20 @@ as_csquares.data.frame <- function(x, resolution = 1, csquares, ...) {
     attributes(x)$csquares_col <- csq_col
     
   } else {
+    
     x[[csquares]] <- as_csquares(x[[csquares]])
     attributes(x)$csquares_col <- csquares
   }
   
-  class(x) <- c("csquares", class(x))
+  class(x) <- union("csquares", class(x))
   
   x
 }
 
 #' @rdname as_csquares
 #' @export
-as_csquares.sf <- function(x, resolution = 1, csquares, ...) {
+as_csquares.sf <- function(x, resolution = 1, csquares, ..., use_centroids = TRUE) {
+  if (use_centroids) x <- sf::st_centroid(x)
   .csquares_spatial(x, resolution)
 }
 
@@ -114,7 +123,6 @@ as_csquares.stars <- function(x, resolution = 1, csquares, ...) {
     sf::st_transform(4326) |>
     sf::st_coordinates() |>
     .csquares_generic(resolution)
-  class(x)
   nms <- make.names(c(names(x), "csquares"), unique = TRUE)
   nms <- nms[[length(nms)]]
   x[[nms]] <- csq
@@ -176,6 +184,6 @@ as_csquares.stars <- function(x, resolution = 1, csquares, ...) {
     dplyr::summarise(csquares = paste0(.data$csquares, collapse = "|")) |>
     dplyr::pull("csquares") |>
     c()
-  class(x) <- c("csquares", class(x))
+  x <- vctrs::new_vctr(x, class = c("csquares", "character"))
   x
 }

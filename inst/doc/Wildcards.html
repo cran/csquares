@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Wildcards</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Wildcards</h1>
+
+
+
+<div id="what-are-wildcards" class="section level2">
+<h2>What are wildcards?</h2>
+<p>Wildcards are special characters that represent any valid alternative
+character. In the context of c-squares, wildcards can be used to
+compactly notate a range of raster cells. Let’s say you have the
+following string of four c-squares defined:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(csquares, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>csq <span class="ot">&lt;-</span> <span class="fu">as_csquares</span>(<span class="st">&quot;1000:1|1000:2|1000:3|1000:4&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">print</span>(csq)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;   4 squares</span></span></code></pre></div>
+<p>These are four squares of 5° by 5°. As you can see the first four
+digits of each of the four squares are identical. Therefore, these
+squares could be notated as <code>&quot;1000:*&quot;</code> where <code>*</code>
+is the wildcard symbol. The wildcard thus represent each of the four
+posibble values that are allowed at its position. Constructing a
+<code>csquares</code> object with <code>as_csquares()</code> results in
+an identical object when the either the long format or the compact
+notation with wildcard is used.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>csqw <span class="ot">&lt;-</span> <span class="fu">as_csquares</span>(<span class="st">&quot;1000:*&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">print</span>(csqw)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;   4 squares</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="fu">identical</span>(csq, csqw)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+</div>
+<div id="expanding-wildcards" class="section level2">
+<h2>Expanding wildcards</h2>
+<p><em>‘Ceci n’est pas une pipe’</em></p>
+<p>The <code>csquares</code> object does not store wildcards, as it will
+use the expanded format with explicit notation, where each raster cell
+is included in the character string and is separated by the pipe
+<code>&quot;|&quot;</code> character. The function <code>as_csquares()</code>
+wraps a call to <code>expand_wildcards()</code> which expands c-square
+codes containing wildcards. It will replace the short notation with
+wildcard by pipe seperated csquares codes.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">expand_wildcards</span>(<span class="st">&quot;1000:*&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">as.character</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1000:1|1000:2|1000:3|1000:4&quot;</span></span></code></pre></div>
+</div>
+<div id="matching-wild-cards" class="section level2">
+<h2>Matching wild cards</h2>
+<p>Wildcards can also be used to query spatial data and select specific
+blocks of raster cells. When used for searching, the wildcard is
+sometimes represented by the percentage character instead of an
+asterisk. For this R package it doesn’t matter. Bother characters are
+interpreted exactly the same.</p>
+<p>The example below shows how you can filter a specific quadrant from
+the global killer whale data set using a wildcard notation.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">library</span>(sf, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.11.2, GDAL 3.7.2, PROJ 9.3.0; sf_use_s2() is TRUE</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>orca_sf <span class="ot">&lt;-</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  orca <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">as_csquares</span>(<span class="at">csquares =</span> <span class="st">&quot;csquares&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">plot</span>(orca_sf[<span class="st">&quot;orcinus_orca&quot;</span>])</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAq1BMVEUAAAAAADoAAGYAALMAOjoAOmYAOpAAZpAAZrY6AAA6ADo6AGY6OgA6Ojo6OmY6ZpA6ZrY6kLY6kNtmAABmOgBmOjpmkLZmkNtmtttmtv+QOgCQZgCQZjqQkGaQkLaQtpCQttuQtv+Q29uQ2/+2ZgC2Zjq2kGa227a229u22/+2///bkDrbkGbbtmbbtpDb27bb29vb////tmb/25D/27b/9Qr//7b//9v///91oOZSAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAIk0lEQVR4nO2cDXvbNBSF3YWODsYG7WC0fGzQDtaFMZo2rf//L0P+tmxJR5IlW4nPefKUypKupVfnykoymuWUUdnSA0hdBAREQEAEBERAQLMDerrKnt/NfdMJIiAgphhQFED//phlX/1U+GSbnbx7kz27zfPPL8W1nxsHiet/fsiy02vR5iZ79inPHy+yc1H4RzQ7eX3rElHUvsmy7NV1jKlEAbTNShWZtG1+u6munbeAKp1cy4Dq68UF64j5rosVXhEA3b+oEVQTfn6b/1fM4Ye7hwsx8xbQ6W3dpgdI/Di7yz+Xl10ifn1XtDnXDGiSIgCqJlz9R0znsru2ff2xc9BlOfEzCZC4cPrRNWKhL3+JfDsLP5cYgJrH1Lbw/LYyfu/R1e5B1yUUGZCozJrNxjpi/vRrlWMHAqiadbkzXPam04xeB6hKkYc31Xbyh1vE7PT3LxeHAsjTQc0e8vDby3o7to1Y9Xw8GECDHaN6tlTXdq/eKwBVv++6nfnpl8FjzBxx1+xnh7JJy8+cajpiEt/fFblwqQIkWj5cFT/LR1ORZ/Jh2xyxrC36H4qD5FNLfTq5afbRMSAxwfZI80F9pEERD2qTzutz79vit3Y61bn3rWoPyu/Fzvz67+okXTTLXqlP0pqI5VPs9P12dLwMIr4XAyIgoFQB1e+v4r3HshUBAaUKKBkREBABAREQEAEBERAQAQEREBABAREQEAEBERAQAQEREBABAREQEAEBERAQAQEREBABAREQEAEBERAQAQEREBABAREQEAEBERCQEVC2EvkD2myq1yaTX8ayU+OowWwbE1A0QCsRHRTNQQTEFCuUjoOUtzhkBxHQ/CkWO76P/AFNXbf9Xrz2UuNx/FAO8h82AR1SisWT/7ADOWjqopd2mmBHfdk0BzitcClGQATkDGiQqYE2i+ByouPYHzqoW/S2XD+YjN16vtm3YVRPtX1jrF59r4nsGBcSFoMLkmIEZKr0s3fY/LHNBTMW77A2DqoXtX1tejuuEpBiH+2ZZD+q79lLdpzdIlvIvOMbe6KwBGSq9DP+5ExyzAIbQN7BHRykNYWmZ1vZ35F7jhkGG5qmLkzhMhhP5BQjoHGlt/0np5RjIkBA3pEnf9wh1h2E6NnN+Fajc1B158EYpgGKl2IEBMMSkL5y4uYwedtx2Swm3NwfkNFB7cHR2F86ZdadFU8xXVmudAK0+GfSBMQUg4AQeuSg4SlTv0k3kQwOcqGTp5BiBOSYIp7d5BBWlXaAPEbuDMhiH+1MMu7WbNKmztI5yXjnzhR2gFJIsdUDCpoiLl63DB5o8P6ALBy06X/uXq/b8ONH1Bks5chBdkufSIqtG5B7ijh3sfC6RR+pf6Db2gBycpDyHGPepO3WUXLMqHO/idOwZ08xAiKgUeWsshiGakzDS0nvQU6O6crgU8m87xCFg9phyOUUU2x1gGbVciPxB4QcI5lG+uLeyUF4HdvBGIKNT6VLpRgBtZWzCgFa5s6+DmoXTfrEovvsQ/qQXt5aPR2UO729WjzFCKisDGbhAHYPNRiXe0JAdksxOgf1y+N45mBgMIk5iIDip5h/vNAjsbuTGyB7B202gRykXldnUySXYgREQKrKwPk9V09X+QNyXYruvZjSQYrIB+4gApo3xdwihx6J6xhtAPmvW+9zfGPkyA7qv2tMIcVWByiOhV17hRoGvpMzIH8H9Xw0cpFlMGV7r5EYT2DgGwMCmgQovIV9egW4v+WdnAFNdVBdlkPaBhsPw6Fz+yXZaEK9bxgM/z8XAYUBFEje8SYPw25C/oACOKi/STsHGwzDzUGaOfWORntjSwIioPiAAilosGmjCP/HTaY6qH2W1Kvl/CBSVPa++1eWO4f0/5XA0EEpnKSPHlAwc4eKFEeLOqjapK07YzsOy7JPBne2a0xA0QCtRIs6yLjIIRzkOhJFPQFFA7QSLeeg7nuyOCYA/yhb/tBe/7evCIiAlgK0Ei3noG6R/Z9iyH7aer29moqmTEDRAK1Eizoo+FlP9kHzW2cKxSeG8RxEQEyxQos7SF7K6cGk7/7k16AwtJcieAofuR4voJVocQdNKMuVRsdIpugqFeVhcAKKBmglOngHGQbn+RdMjyzFCOhgASUi4+A86FjFtwJkXGRly25R3RzjPk1/1Xfu/2UxQ2OLSASkrbQ2vqImQBZF0hIpZupvdpDb3IJoNBJjY6dIBDSonJgVqeWWbljGxhbxEthXlxMBAU1IlPiDS0Ermaa/CAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICACAiIgIAICIiAgAgIiICAAgCy+QMUSykNQJuA2gcVAREQAREQAREQAREQAREQAREQAREQAREQAREQAREQARHQygAlrCQABb2T5XhSG/Z8dyKgIK2SG/Z8dyKgIK2SG/Z8dyKgIK2SG/Z8dyKgIK2SG/Z8d1oxoAMVAQEREBABAREQEAEBERAQAQEREBABAREQEAEBERBQdEC7LDu5VhZ0rR4vim+0ztTh7r/9BIMFVWxAOzGHXTMPqaBtdf+NftqPF88+qfrEU2RAT1fn4ufN2bigbZXvWgYjCdM0ldpggRUZ0P2LS/FzW81KKmhb5VvtpHfZeUtPGyywYgMq06WelVTQtspvvhNb0LkmYAdIFyywIgOqNol6q5AK2laPF8/vBCUNoZaINlhgpQeovqSxxrEB8kmx6lK5xYx1bCnms0lXlzTP+mPbpD0e89XMYYodyWPe56BYThpu0kdyUBRJUL0heLo66wqg1Y14zKt3oBoQCBZUfLMKREBABAREQEAEBPQ/b64HaLs58Z4AAAAASUVORK5CYII=" /><!-- --></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="do">## Note that the first number in the csquares code (1)</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="do">## represents the North East quadrant</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="do">## The remainder of the code consists of wildcards.</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  orca_sf <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    <span class="fu">filter</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>      <span class="fu">in_csquares</span>(csquares, <span class="st">&quot;1***:*&quot;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>    <span class="fu">drop_csquares</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    <span class="fu">select</span>(<span class="st">&quot;orcinus_orca&quot;</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div id="mode" class="section level3">
+<h3>Mode</h3>
+<p>Consider the following <code>csquares</code> object:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>csq_example <span class="ot">&lt;-</span> <span class="fu">as_csquares</span>(<span class="fu">c</span>(<span class="st">&quot;1000:100|1000:111|1000:206|1000:207&quot;</span>, <span class="st">&quot;1000:122&quot;</span>))</span></code></pre></div>
+<p>It is a <code>vector</code> of two elements, the first containing 4
+squares, the second 1 square. Let’s say we want to check if
+<code>&quot;1000:1**&quot;</code> matches with any of the elements in the
+<code>vector</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">in_csquares</span>(csq_example, <span class="st">&quot;1000:1**&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; [1] TRUE TRUE</span></span></code></pre></div>
+<p>Which is <code>TRUE</code> for both elements in the vector. This
+makes sense as both elements indeed contain csquares codes that match
+with <code>&quot;1000:1**&quot;</code>. However, the first element also contains
+elements that don’t match. The reason that the example still returns
+<code>TRUE</code> in both cases is because the <code>mode</code> is set
+to <code>&quot;any&quot;</code>. Meaning that it will return <code>TRUE</code> if
+any of the codes in an element matches. You should set the mode to
+<code>&quot;all&quot;</code> if you only want a positive match when all codes in
+an element match:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">in_csquares</span>(csq_example, <span class="st">&quot;1000:1**&quot;</span>, <span class="at">mode =</span> <span class="st">&quot;all&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; [1] FALSE  TRUE</span></span></code></pre></div>
+</div>
+<div id="strict" class="section level3">
+<h3>Strict</h3>
+<p>Now, let’s compare the same <code>csquares</code> object with
+<code>&quot;1000:*&quot;</code> which has a lower resolution than the squares in
+the object:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">in_csquares</span>(csq_example, <span class="st">&quot;1000:*&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] TRUE TRUE</span></span></code></pre></div>
+<p>Again, it matches with all elements in the <code>vector</code>, even
+though the resolution is different. This is because
+<code>in_csquares()</code> isn’t very strict by default. Meaning that it
+will also match with any ‘child’ square with a higher resolution. If you
+want a strict match where the resolution also matches use
+<code>strict = TRUE</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">in_csquares</span>(csq_example, <span class="st">&quot;1000:*&quot;</span>, <span class="at">strict =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] FALSE FALSE</span></span></code></pre></div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

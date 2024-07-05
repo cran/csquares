@@ -15,7 +15,7 @@
 #' @export
 st_as_stars.csquares <-
   function(x, ...) {
-    if (inherits(x, "character")) {
+    if (inherits(x, c("character", "vctrs_vctr"))) {
       x <- lapply(x, strsplit, split = "[|]")
       if (length(x) != 1 && any((lapply(x, \(x) unlist(x) |> length()) |> unlist()) > 1))
         rlang::abort(c(
@@ -35,6 +35,7 @@ st_as_stars.csquares <-
         as_csquares(validate = FALSE) |>
         sf::st_as_sf() |>
         new_csquares(resolution = resolution)
+      class(result) <- union("csquares", class(result))
       return(result)
     } else if (inherits(x, "stars")) {
       return(x)
@@ -44,7 +45,7 @@ st_as_stars.csquares <-
       ))
     } else if (inherits(x, "data.frame")) {
       .by <- attributes(x)$csquares_col
-      new_cols <- x |> dplyr::select(!.by) |> colnames()
+      new_cols <- x |> drop_csquares() |> colnames()
       grd <-
         stars::st_as_stars(x[[.by]]) |>
         dplyr::mutate(
@@ -55,9 +56,9 @@ st_as_stars.csquares <-
             ]
           })
         )
+      class(grd) <- union("csquares", class(grd))
       attributes(grd)$csquares_col <- .by
-      class(grd) <- c("csquares", class(grd))
       return(grd)
     }
-    NextMethod("st_as_stars")
+    NextMethod()
   }
