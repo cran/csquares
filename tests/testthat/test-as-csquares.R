@@ -36,10 +36,19 @@ test_that("Length of input codes and output csquares are equal", {
   expect_equal({length(codes)}, {length(csq)})
 })
 
-test_that("Both input codes and output squares produce the same number of elements", {
-  expect_identical({
-    csq_sf$geom |> lapply(length) |> unlist()
-  }, {
-    strsplit(codes, "[|]") |> lapply(length) |> unlist()
+test_that("A stars can be converted into a csquares object", {
+  expect_true({
+    orca_stars <-
+      new_csquares(
+        st_bbox(c(xmin = -180, xmax = 180, ymin = -90, ymax = 90), crs = 4326),
+        resolution = 5)
+    
+    orca_stars[["orcinus_orca"]] <- NA
+    orca_stars[["orcinus_orca"]][match(orca$csquares, orca_stars$csquares)] <- orca$orcinus_orca
+    orca_stars$csquares_copy <- orca_stars$csquares
+    orca_stars <- drop_csquares(orca_stars)
+    orca_stars <- as_csquares(orca_stars)
+    
+    inherits(orca_stars, "csquares") && "csquares_col" %in% names(attributes(orca_stars))
   })
 })

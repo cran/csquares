@@ -1,6 +1,6 @@
 Package: csquares
 Title: Concise Spatial Query and Representation System (c-Squares)
-Version: 0.0.5
+Version: 0.0.6
 Authors@R: 
     person("Pepijn", "de Vries", role = c("aut", "cre"),
     email = "pepijn.devries@outlook.com",
@@ -19,15 +19,15 @@ Depends: R (>= 4.1.0)
 LazyData: true
 Collate: 'helpers.R' 'as_csquares.R' 'as_stars.R' 'csquares-package.R'
         'csquares_methods.R' 'drop.R' 'expand.R' 'in.R' 'init.R'
-        'new_csquares.R' 'orca.R' 'st_as_sf.R' 'summarise.R'
-        'tidyverse.R' 'validate.R'
+        'new_csquares.R' 'orca.R' 'resample.R' 'tidyverse.R'
+        'st_as_sf.R' 'validate.R'
 Config/testthat/edition: 3
 URL: https://pepijn-devries.github.io/csquares/,
         https://github.com/pepijn-devries/csquares/
 BugReports: https://github.com/pepijn-devries/csquares/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-07-05 08:52:23 UTC; vries171
+Packaged: 2024-07-19 19:54:02 UTC; vries171
 Maintainer: Pepijn de Vries <pepijn.devries@outlook.com>
 Repository: CRAN
-Date/Publication: 2024-07-05 11:20:02 UTC
+Date/Publication: 2024-07-19 20:10:06 UTC
