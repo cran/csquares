@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Tidy csquares</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Tidy csquares</h1>
+
+
+
+<div id="the-csquares-family" class="section level2">
+<h2>The Csquares family</h2>
+<p><code>csquares</code> objects can inherit properties from different
+parents as illustrated in <code>vignette(&quot;csquares-objects&quot;)</code>.
+When a <code>csquares</code> object inherits from the class
+<code>data.frame()</code>, you can apply many <a href="https://www.tidyverse.org/">tidyverse</a> operations while
+preserving the <code>csquares</code> properties of the object. When you
+create a <code>csquares</code> object from a <code>character()</code>,
+you cannot use tidyverse operations as it doesn’t inherit the
+<code>data.frame()</code> class. You can check which ancestors your
+object has by calling <code>class()</code> as shown in the example
+below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## Required libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(csquares)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## create a simple csquares object:</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>char_csq <span class="ot">&lt;-</span> <span class="fu">as_csquares</span>(<span class="fu">c</span>(<span class="st">&quot;1000&quot;</span>, <span class="st">&quot;3000&quot;</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="do">## This simple objects has &quot;character&quot; as parent class.</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="do">## So tidyverse is out of the question here.</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">class</span>(char_csq)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; [1] &quot;csquares&quot;   &quot;character&quot;  &quot;vctrs_vctr&quot;</span></span></code></pre></div>
+<p>So let’s start by creating a <code>csquares</code> object that does
+inherit from the <code>data.frame()</code> class. It will be used in
+examples shown in this vignette.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="do">## create a csquares object with geometries:</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>orca_csq  <span class="ot">&lt;-</span> orca <span class="sc">|&gt;</span> <span class="fu">as_csquares</span>(<span class="at">csquares =</span> <span class="st">&quot;csquares&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="do">## It inherits the class data.frame.</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="fu">class</span>(orca_csq)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; [1] &quot;csquares&quot;   &quot;data.frame&quot;</span></span></code></pre></div>
+</div>
+<div id="tidyverse-operations" class="section level2">
+<h2>Tidyverse operations</h2>
+<p>All tidyverse (and base) methods implemented in the Csquares package
+end with the suffix <code>.csquares</code>. You should never call these
+functions directly as this will likely produce errors. Instead, load the
+packages that implement the generic method (e.g., <code>dplyr</code> for
+<code>mutate()</code> and <code>summarise()</code>; <code>tidyr</code>
+for <code>pivot_wider()</code>; <code>sf</code> for
+<code>st_as_sf()</code> etc.). Then call the method without the
+<code>.csquares</code> suffix as shown in the examples below. As you
+call the method on <code>csquares</code> objects, the correct
+implementation of the generic method will be dispatched
+automatically.</p>
+<p>The example below shows how you can mutate a column in a
+<code>csquares</code> object, then group by a specific column and
+summarise it. The csquares properties are grouped automatically. If the
+<code>csquares</code> object inherits spatial features, the geometries
+are recalculated after summarising.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>orca_sum <span class="ot">&lt;-</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  orca_csq <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="do">## Add geometries to the object</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">st_as_sf</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="do">## use `mutate` to create a column that contains the csquares&#39; quadrant</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">quadrant =</span> <span class="fu">case_match</span>(<span class="fu">substr</span>(csquares <span class="sc">|&gt;</span> <span class="fu">as.character</span>(), 1L, 1L),</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>                               <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;NE&quot;</span>, <span class="st">&quot;3&quot;</span> <span class="sc">~</span> <span class="st">&quot;SE&quot;</span>, <span class="st">&quot;5&quot;</span> <span class="sc">~</span> <span class="st">&quot;SW&quot;</span>, <span class="st">&quot;7&quot;</span> <span class="sc">~</span> <span class="st">&quot;NW&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="do">## grouping by the column with logical values and summarising</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="do">## will reduce the number of rows to 4 (one for each quadrant)</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="fu">group_by</span>(quadrant) <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">realms =</span> <span class="fu">sum</span>(orcinus_orca), <span class="at">.groups =</span> <span class="st">&quot;keep&quot;</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="do">## Note that csquares are automatically concatted and</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="do">## geometries recalculated</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="fu">ggplot</span>(orca_sum) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> realms)) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> quadrant)) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  <span class="fu">coord_sf</span>() <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Realm count per quadrant&quot;</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Printing the summarised object shows that there are only two rows
+left. One for each value in the grouped column.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>orca_sum</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Simple feature collection with 4 features and 3 fields</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Geometry type: POLYGON</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Dimension:     XY</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; Bounding box:  xmin: -180 ymin: -90 xmax: 180 ymax: 90</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; Geodetic CRS:  WGS 84</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 4</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; # Groups:   quadrant [4]</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;   quadrant realms csquares                                                  geom</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; * &lt;chr&gt;     &lt;int&gt; &lt;csquares&gt;                                       &lt;POLYGON [°]&gt;</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 1 NE            6 1004:1|1004:2|1004:4|1005:1|1005:2|… ((10 35, 5 35, 0 35, 0 4…</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 2 NW          101 7000:1|7000:2|7001:1|7001:2|7001:3|… ((-180 10, -180 15, -180…</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; 3 SE           76 3000:1|3000:2|3000:3|3000:4|3001:1|… ((0 -55, 0 -50, 0 -45, 0…</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; 4 SW           26 5000:1|5000:2|5000:3|5000:4|5001:1|… ((-180 -85, -180 -80, -1…</span></span></code></pre></div>
+</div>
+<div id="join" class="section level2">
+<h2>Join</h2>
+<p>Joining <code>csquares</code> objects is pretty straightforward and
+is only allowed on objects that inherit from the <code>data.frame</code>
+class. An exception are <code>csquares</code> objects that inherit from
+the <code>stars</code> class (<code>stars::st_as_stars()</code>). On
+those objects you are allowed to perform left joins, all other joins are
+impossible. See also <code>?join</code>.</p>
+<p>Below you see how you can simply join a <code>data.frame</code> to a
+<code>csquares</code> object by the csquares code.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">foo =</span> <span class="st">&quot;bar&quot;</span>, <span class="at">csquares =</span> <span class="st">&quot;3603:3&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">left_join</span>(orca_csq, df, <span class="at">by =</span> <span class="st">&quot;csquares&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">max =</span> <span class="dv">30</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt;         csquares orcinus_orca  foo</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; 1  S60 E 30 (5°)        FALSE  bar</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 2  S60 W 40 (5°)        FALSE &lt;NA&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 3  N10 W 90 (5°)         TRUE &lt;NA&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 4  N 0 W 40 (5°)        FALSE &lt;NA&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 5  S10 W 70 (5°)         TRUE &lt;NA&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; 6  N 0 W100 (5°)         TRUE &lt;NA&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; 7  N40 E 30 (5°)        FALSE &lt;NA&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; 8  N 0 W100 (5°)         TRUE &lt;NA&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; 9  S 0 W 10 (5°)        FALSE &lt;NA&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; 10 S40 E130 (5°)         TRUE &lt;NA&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 2048 rows ]</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="fu">right_join</span>(orca_csq, df, <span class="at">by =</span> <span class="st">&quot;csquares&quot;</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;        csquares orcinus_orca foo</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 1 S60 E 30 (5°)        FALSE bar</span></span></code></pre></div>
+<p>You are also allowed to join a <code>csquares</code> object to
+another <code>csquares</code> by another column that does not represent
+the csquares codes:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>csq <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">orcinus_orca =</span> <span class="cn">FALSE</span>, <span class="at">csquares =</span> <span class="st">&quot;3603:3&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">as_csquares</span>(<span class="at">csquares =</span> <span class="st">&quot;csquares&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">left_join</span>(orca_csq, csq, <span class="at">by =</span> <span class="st">&quot;orcinus_orca&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">max =</span> <span class="dv">30</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;       csquares.x orcinus_orca    csquares.y</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 1  S60 E 30 (5°)        FALSE S60 E 30 (5°)</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; 2  S60 W 40 (5°)        FALSE S60 E 30 (5°)</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; 3  N10 W 90 (5°)         TRUE         empty</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; 4  N 0 W 40 (5°)        FALSE S60 E 30 (5°)</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; 5  S10 W 70 (5°)         TRUE         empty</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; 6  N 0 W100 (5°)         TRUE         empty</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; 7  N40 E 30 (5°)        FALSE S60 E 30 (5°)</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; 8  N 0 W100 (5°)         TRUE         empty</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; 9  S 0 W 10 (5°)        FALSE S60 E 30 (5°)</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; 10 S40 E130 (5°)         TRUE         empty</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt;  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 2048 rows ]</span></span></code></pre></div>
+<p>Note that the resulting <code>csquares</code> object has two columns
+with csquares codes. Only the column from the left-hand table in the
+join is used for further operations. However, you should wonder if this
+join is meaningful when mismatching csquares codes are the result.</p>
+</div>
+<div id="further-reading" class="section level2">
+<h2>Further reading</h2>
+<p>For some additional <code>csquares</code> specific examples check out
+<code>?tidyverse</code> and <code>?join</code>. For extensive
+documentation on tidy operations, consult the <a href="https://www.tidyverse.org">tidyverse website</a>.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -346,12 +346,12 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 character. In the context of c-squares, wildcards can be used to
 compactly notate a range of raster cells. Let’s say you have the
 following string of four c-squares defined:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(csquares, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(csquares)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>csq <span class="ot">&lt;-</span> <span class="fu">as_csquares</span>(<span class="st">&quot;1000:1|1000:2|1000:3|1000:4&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">print</span>(csq)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;   4 squares</span></span></code></pre></div>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;  csquares [1:1]   4 squares</span></span></code></pre></div>
 <p>These are four squares of 5° by 5°. As you can see the first four
 digits of each of the four squares are identical. Therefore, these
 squares could be notated as <code>&quot;1000:*&quot;</code> where <code>*</code>
@@ -363,7 +363,7 @@ notation with wildcard is used.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>csqw <span class="ot">&lt;-</span> <span class="fu">as_csquares</span>(<span class="st">&quot;1000:*&quot;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">print</span>(csqw)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;   4 squares</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;  csquares [1:1]   4 squares</span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="fu">identical</span>(csq, csqw)</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
@@ -393,14 +393,13 @@ interpreted exactly the same.</p>
 the global killer whale data set using a wildcard notation.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">library</span>(sf, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.11.2, GDAL 3.7.2, PROJ 9.3.0; sf_use_s2() is TRUE</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>orca_sf <span class="ot">&lt;-</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  orca <span class="sc">|&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">as_csquares</span>(<span class="at">csquares =</span> <span class="st">&quot;csquares&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">plot</span>(orca_sf[<span class="st">&quot;orcinus_orca&quot;</span>])</span></code></pre></div>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>orca_sf <span class="ot">&lt;-</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  orca <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">as_csquares</span>(<span class="at">csquares =</span> <span class="st">&quot;csquares&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="fu">plot</span>(orca_sf[<span class="st">&quot;orcinus_orca&quot;</span>])</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="do">## Note that the first number in the csquares code (1)</span></span>

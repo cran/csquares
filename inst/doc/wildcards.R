@@ -4,8 +4,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----defs---------------------------------------------------------------------
-library(csquares, warn.conflicts = FALSE)
+## ----defs, warning = TRUE-----------------------------------------------------
+library(csquares)
 
 csq <- as_csquares("1000:1|1000:2|1000:3|1000:4")
 

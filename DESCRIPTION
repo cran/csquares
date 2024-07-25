@@ -1,6 +1,6 @@
 Package: csquares
 Title: Concise Spatial Query and Representation System (c-Squares)
-Version: 0.0.6
+Version: 0.0.7
 Authors@R: 
     person("Pepijn", "de Vries", role = c("aut", "cre"),
     email = "pepijn.devries@outlook.com",
@@ -11,23 +11,24 @@ Description: Encode and decode c-squares, from and to simple feature (sf)
     join or query spatial data.
 Imports: dplyr, methods, purrr, rlang, sf, stars, stringr, tidyr,
         tidyselect, vctrs
-Suggests: curl, ggplot2, knitr, rmarkdown, testthat (>= 3.0.0)
+Suggests: curl, DiagrammeR, ggplot2, knitr, lifecycle, rmarkdown,
+        rnaturalearth, rnaturalearthdata, testthat (>= 3.0.0)
 License: GPL (>= 3)
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 Depends: R (>= 4.1.0)
 LazyData: true
 Collate: 'helpers.R' 'as_csquares.R' 'as_stars.R' 'csquares-package.R'
-        'csquares_methods.R' 'drop.R' 'expand.R' 'in.R' 'init.R'
-        'new_csquares.R' 'orca.R' 'resample.R' 'tidyverse.R'
-        'st_as_sf.R' 'validate.R'
+        'csquares_methods.R' 'drop.R' 'expand.R' 'ices.R' 'in.R'
+        'init.R' 'joins_tidy.R' 'new_csquares.R' 'orca.R' 'resample.R'
+        'tidyverse.R' 'st_as_sf.R' 'validate.R' 'vctrs.R'
 Config/testthat/edition: 3
 URL: https://pepijn-devries.github.io/csquares/,
         https://github.com/pepijn-devries/csquares/
 BugReports: https://github.com/pepijn-devries/csquares/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-07-19 19:54:02 UTC; vries171
+Packaged: 2024-07-25 10:00:51 UTC; vries171
 Maintainer: Pepijn de Vries <pepijn.devries@outlook.com>
 Repository: CRAN
-Date/Publication: 2024-07-19 20:10:06 UTC
+Date/Publication: 2024-07-25 12:00:06 UTC
