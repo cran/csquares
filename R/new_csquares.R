@@ -30,6 +30,7 @@ new_csquares <-
     if (is.na(crs_in)) {
       rlang::warn("Object 'x' crs is unknown, assuming it is EPSG:4326.")
       crs_in <- sf::st_crs(4326)
+      sf::st_crs(x) <- crs_in
     }
     
     x <-
@@ -52,13 +53,7 @@ new_csquares <-
     result <-
       x |>
       stars::st_as_stars(dx = resolution, dy = resolution)
-    
-    if (sf::st_crs(x)$input != "EPSG:4326") {
-      result <-
-        result |>
-        sf::st_transform(crs = crs)
-    }
-    
+
     result[["values"]] <- NULL
     result[["csquares"]] <- as_csquares.stars(result, resolution = resolution)[["csquares"]]
     result <- .s3_finalise(result, "csquares")

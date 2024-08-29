@@ -7,8 +7,10 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 library(csquares)
 
-## ----csquares-schematic, echo=FALSE, warning = FALSE--------------------------
+## ----csquares-schematic, echo=FALSE, warning=FALSE, result='asis'-------------
 library(DiagrammeR)
+library(DiagrammeRsvg)
+library(xml2)
 grViz(
 "
 digraph 'Csquares schematic' {
@@ -45,7 +47,14 @@ strucdf:df -> strucsf:sf;
 strucchar:charcsq -> strucdf:dfcsq;
 strucchar:charcsq -> strucsf:sfcsq;
 }
-")
+") |>
+  export_svg() |>
+  read_xml() |>
+  as.character() |>
+  ## By rendering it as html instead of a Graphviz object
+  ## we save a huge chunk of javascript that we don't need (~600 kB)
+  ## the result is still the same
+  htmltools::HTML()
 
 ## ----create-csquares----------------------------------------------------------
 csquares_char <- as_csquares(c("1000", "3000", "5000", "7000"))
@@ -81,6 +90,12 @@ csquares_stars[["dummy"]] <-
   csquares_df[["dummy"]] [
     match(csquares_stars[["csquares"]], csquares_df[["csquares"]])
   ]
+
+## ----csquares-stars-join------------------------------------------------------
+csquares_stars <-
+  left_join(csquares_stars,
+            data.frame(csquares = "1000", foo = "bar"),
+            by = "csquares")
 
 ## ----validate-----------------------------------------------------------------
 ## Let's create a fake csquares object with a code that is merely impossible:

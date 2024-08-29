@@ -23,7 +23,7 @@ semi_join.csquares(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...)
 
 anti_join.csquares(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...)
 
-st_join.csquares(x, y, join, ..., suffix)
+st_join.csquares(x, y, join, ..., suffix = c(".x", ".y"))
 }
 \arguments{
 \item{x, y}{A pair of data frames, data frame extensions (e.g. a tibble), or
@@ -80,6 +80,7 @@ generics. So load the \code{dplyr} package first, then call the function without
 suffix (see examples). When \code{x} inherits from \code{stars}, only \code{left_join} is supported.
 }
 \examples{
+\donttest{
 if (requireNamespace(c("sf", "dplyr"))) {
   library(csquares)
   library(sf)
@@ -95,7 +96,7 @@ if (requireNamespace(c("sf", "dplyr"))) {
   orca_grid <- new_csquares(orca_sf, 5)
   orca_grid <- left_join(orca_grid, orca, by = "csquares")
 }
-
+}
 }
 \author{
 Pepijn de Vries

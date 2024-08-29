@@ -1,7 +1,15 @@
+csquares v0.1.0
+-------------
+
+  * Added code coverage workflow and badge
+  * Improved test coverage
+  * Reduce file size of vignettes
+  * Several minor fixes
+
 csquares v0.0.7
 -------------
 
-  * Added experimental functions to convert ICES rectangles
+  * Added functions to convert ICES rectangles
   * Added tidyverse join operations
   * Added vignettes:
     * `vignette("tidy")`

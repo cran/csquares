@@ -1,6 +1,6 @@
 Package: csquares
 Title: Concise Spatial Query and Representation System (c-Squares)
-Version: 0.0.7
+Version: 0.1.0
 Authors@R: 
     person("Pepijn", "de Vries", role = c("aut", "cre"),
     email = "pepijn.devries@outlook.com",
@@ -11,8 +11,9 @@ Description: Encode and decode c-squares, from and to simple feature (sf)
     join or query spatial data.
 Imports: dplyr, methods, purrr, rlang, sf, stars, stringr, tidyr,
         tidyselect, vctrs
-Suggests: curl, DiagrammeR, ggplot2, knitr, lifecycle, rmarkdown,
-        rnaturalearth, rnaturalearthdata, testthat (>= 3.0.0)
+Suggests: curl, DiagrammeR, DiagrammeRsvg, ggplot2, htmltools, knitr,
+        lifecycle, rmarkdown, rnaturalearth, rnaturalearthdata,
+        testthat (>= 3.0.0), xml2
 License: GPL (>= 3)
 Encoding: UTF-8
 RoxygenNote: 7.2.3
@@ -28,7 +29,7 @@ URL: https://pepijn-devries.github.io/csquares/,
 BugReports: https://github.com/pepijn-devries/csquares/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-07-25 10:00:51 UTC; vries171
+Packaged: 2024-08-29 14:52:01 UTC; vries171
 Maintainer: Pepijn de Vries <pepijn.devries@outlook.com>
 Repository: CRAN
-Date/Publication: 2024-07-25 12:00:06 UTC
+Date/Publication: 2024-08-29 22:40:02 UTC
