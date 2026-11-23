@@ -10,16 +10,25 @@ validate_csquares(x)
 \item{x}{An object of class \code{csquares} to be evaluated.}
 }
 \value{
-Returns a \code{logical} value indicating whether the \code{csquares} object is valid or not.
+Returns a \code{logical} value indicating whether the \code{csquares}
+object is valid or not.
 }
 \description{
-Tests if a \code{csquares} object is correctly specified and can be translated into valid coordinates
+Tests if a \code{csquares} object is correctly specified and can be translated
+into valid coordinates
 }
 \examples{
 validate_csquares(
   as_csquares("7500:110:3|7500:110:1|1500:110:3|1500:110:1")
 )
 }
+\seealso{
+Other csquares-class:
+\code{\link[=as_csquares]{as_csquares()}},
+\code{\link[=new_csquares]{new_csquares()}},
+\code{\link[=st_as_stars.csquares]{st_as_stars.csquares()}}
+}
 \author{
 Pepijn de Vries
 }
+\concept{csquares-class}

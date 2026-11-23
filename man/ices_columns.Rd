@@ -7,14 +7,19 @@
 ices_columns()
 }
 \value{
-A \code{character} vector with all allowed codes for the columns in ICES
-rectangles.
+A \code{character} vector with all allowed codes for the columns in
+ICES rectangles.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} Get all valid column codes of ICES rectangles.
-Note that ICES subrectangles are not compatible with csquares. For more details
-see \code{vignette("ices")}.
+Get all valid column codes of ICES rectangles.
+Note that ICES subrectangles are not compatible with csquares. For more
+details see \code{vignette("ices")}.
 }
 \examples{
 ices_columns()
 }
+\seealso{
+Other other-encodings:
+\code{\link[=ices_centroids]{ices_centroids()}}
+}
+\concept{other-encodings}

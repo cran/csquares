@@ -1,14 +1,16 @@
 #' Join `csquares` objects using tidyverse conventions
 #' 
-#' When a `csquares` object inherits from class `data.frame`, you can apply tidyverse
-#' joins to the object (`?dplyr::join`). The functions implemented here make sure that
-#' the csquares properties are preserved. The functions should be called via the `dplyr`
-#' generics. So load the `dplyr` package first, then call the function without the `.csquares`
-#' suffix (see examples). When `x` inherits from `stars`, only `left_join` is supported.
+#' When a `csquares` object inherits from class `data.frame`, you can apply
+#' tidyverse joins to the object (`?dplyr::join`). The functions implemented
+#' here make sure that the csquares properties are preserved. The functions
+#' should be called via the `dplyr` generics. So load the `dplyr` package
+#' first, then call the function without the `.csquares` suffix (see
+#' examples). When `x` inherits from `stars`, only `left_join` is supported.
 #' @rdname tidyjoins
 #' @name join
 #' @inheritParams dplyr::inner_join
 #' @inheritParams sf::st_join
+#' @returns Returns a `csquares` object with `y` joined to it.
 #' @examples
 #' \donttest{
 #' if (requireNamespace(c("sf", "dplyr"))) {
@@ -27,8 +29,10 @@
 #'   orca_grid <- left_join(orca_grid, orca, by = "csquares")
 #' }
 #' }
+#' @family tidy-operators
 #' @author Pepijn de Vries
-inner_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
+inner_join.csquares <- function(
+    x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
   .no_stars(x)
   .by <- .s3_df_stars_prep(x, "inner_join")
   class(x) <- setdiff(class(x), "csquares")
@@ -40,7 +44,8 @@ inner_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", "
 
 #' @name join
 #' @rdname tidyjoins
-left_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
+left_join.csquares <- function(
+    x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
   .by <- .s3_df_stars_prep(x, "left_join")
   class(x) <- setdiff(class(x), "csquares")
   class(y) <- setdiff(class(y), "csquares")
@@ -61,7 +66,8 @@ left_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".
 
 #' @name join
 #' @rdname tidyjoins
-right_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
+right_join.csquares <- function(
+    x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
   .no_stars(x)
   .by <- .s3_df_stars_prep(x, "right_join")
   class(x) <- setdiff(class(x), "csquares")
@@ -73,7 +79,8 @@ right_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", "
 
 #' @name join
 #' @rdname tidyjoins
-full_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
+full_join.csquares <- function(
+    x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
   .no_stars(x)
   .by <- .s3_df_stars_prep(x, "full_join")
   class(x) <- setdiff(class(x), "csquares")
@@ -85,7 +92,8 @@ full_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".
 
 #' @name join
 #' @rdname tidyjoins
-semi_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
+semi_join.csquares <- function(
+    x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
   .no_stars(x)
   .by <- .s3_df_stars_prep(x, "semi_join")
   class(x) <- setdiff(class(x), "csquares")
@@ -97,7 +105,8 @@ semi_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".
 
 #' @name join
 #' @rdname tidyjoins
-anti_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
+anti_join.csquares <- function(
+    x, y, by = NULL, copy = FALSE, suffix = c(".x", ".y"), ...) {
   .no_stars(x)
   .by <- .s3_df_stars_prep(x, "semi_join")
   class(x) <- setdiff(class(x), "csquares")
@@ -109,7 +118,7 @@ anti_join.csquares = function(x, y, by = NULL, copy = FALSE, suffix = c(".x", ".
 
 #' @name join
 #' @rdname tidyjoins
-st_join.csquares = function(x, y, join, ..., suffix = c(".x", ".y")) {
+st_join.csquares <- function(x, y, join, ..., suffix = c(".x", ".y")) {
   .by <- .s3_df_stars_prep(x, "st_join")
   class(x) <- setdiff(class(x), "csquares")
   class(y) <- setdiff(class(y), "csquares")

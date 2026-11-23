@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>On the Edge</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">On the Edge</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(csquares)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<p>When working with grid encoding systems like CSquares, you should be
+aware of boundary cases. This is demonstrated with a set op evenly
+distributed points:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>pts <span class="ot">&lt;-</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">expand.grid</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.11</span>, <span class="fl">0.11</span>, <span class="at">by =</span> <span class="fl">0.01</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.11</span>, <span class="fl">0.11</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div>
+<p>Note that some of these points are exactly on CSquare cell
+boundaries, depending on the selected resolution. So, what happens with
+these points when assigning them to specific CSquare cells? Let’s
+see:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>csq <span class="ot">&lt;-</span> <span class="fu">as_csquares</span>(pts, <span class="at">resolution =</span> <span class="fl">0.05</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">plot</span>(csq, <span class="at">axes =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img role="img" aria-label src="data:image/png;base64,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" alt width="300" /></p>
+<p>If we count the number of points in each Csquare cell you will notice
+something interesting.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>csq_agg <span class="ot">&lt;-</span> <span class="fu">summarise</span>(csq <span class="sc">|&gt;</span> <span class="fu">group_by</span>(csquares), <span class="at">count =</span> <span class="fu">n</span>())</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">plot</span>(csq_agg[<span class="st">&quot;count&quot;</span>], <span class="at">axes =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img role="img" aria-label src="data:image/png;base64,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" alt width="300" /></p>
+<p>You will see an artifact near the Equator and at the Prime Meridian.
+Even though the points are distributed homogeneously over space, lower
+number of points are counted near these lines. Why is this?</p>
+<p>This is because of how Rees (2015) defined boundary cases for
+assigning CSquares codes to geo-referenced points: it follows a strict
+“lower-limit inclusive” convention.</p>
+<p>Any grid encoding system would suffer from some form of boundary
+assumptions and artifacts. This often occurs at the edges of the area
+covered by the system. But in case of the CSquares, this occurs near the
+Prime Meridian and Equator.</p>
+<div id="when-worry-about-boundary-effect" class="section level2">
+<h2>When worry about boundary effect?</h2>
+<p>When locations are measured with precision that causes data to snap
+to CSquare cell bounds. This could cause an issue. The same is true if
+there are physical bounds or other reasons for the data to snap to cell
+bounds. This is true for any grid encoding system. So, you should never
+encode data to a resolution that surpasses your data precision</p>
+<p>If your measured locations are affected by random processes and is
+sufficiently precise, points will fall on either side of a cell
+boundary. Cases where they are exactly on the boundary should be
+extremely rare.</p>
+<p>So this becomes especially a challenge when the number of locations
+is limited and / or when the required resolution is fine compared to
+location precision.</p>
+</div>
+<div id="handling-boundary-effects" class="section level2">
+<h2>Handling boundary effects</h2>
+<p>If your data for some reason snaps exactly to cell boundaries, you
+could add some jitter to the location (only a fraction of the resolution
+of your grid), causing the point to randomly fall on either side of the
+boundary. To understand if and how this affects your analysis, you could
+perform a Monte Carlo simulation with the jittering.</p>
+<p>If you don’t want these artifacts to occur near the Prime Meridian or
+Equator, you could also chose to convert your CSquares grid to a <a href="https://r-spatial.github.io/stars/">stars</a> object, and drop the
+CSquares encoding. You can then use <code>sf::st_within</code> or
+<code>sf::st_intersects</code> to assign points to the cells. Whichever
+method you chose, always document what you have done and why.</p>
+<p>Furthermore, the selection of a appropriate scale for your grid
+encoding is key. You should always be aware effects cell size can have
+on your data processing.</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<ul>
+<li>Rees, T. (2015); ““C-Squares,” A New Spatial Indexing System and its
+Applicability to the Description of Oceanographic Datasets” Oceanography
+16(1), 11-19 <a href="https://doi.org/10.5670/oceanog.2003.52" class="uri">https://doi.org/10.5670/oceanog.2003.52</a></li>
+</ul>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
